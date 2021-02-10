@@ -1,5 +1,7 @@
 # ASTMD
-Python code to do the computations for ASTM D series standards, includes the following standards : 
+Python code to do the computations for ASTM D series standards
+```import ASTMD```
+includes the following standards : 
 
 ## ASTM D790 : Standard Test Methods for Flexural Properties of Unreinforced and Reinforced Plastics and Electrical Insulating Material
 ```
