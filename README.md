@@ -1,6 +1,6 @@
 # ASTMD
 Python code to do the computations for ASTM D series standards\
-```import ASTMD```\
+```import ASTMD```
 
 See example.py which computes the results files from Sample_Data.txt
 
