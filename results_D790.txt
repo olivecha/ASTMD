@@ -1,0 +1,13 @@
+ASTM D790 Standard Report
+
+1. Testing parameters
+Material name : Flexural Test
+Width of samples : 25.4mm
+Depths of samples : 1mm
+Span used : 150
+
+2. Test Results
+Tangent modulus : 41949033.0 MPa
+Standard Deviation : (0)
+Flexural strength : 22880.0 MPa
+Standard Deviation : (0)
