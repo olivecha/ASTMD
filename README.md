@@ -60,4 +60,8 @@ Material = ASTMD.D5868(filenames, areas, mtr_name="")
 3. Plots the stress-time curve (just to show the data)
 4. Returns a result_D5868.txt file in the same directory as the test data
 
+### Dependencies
+numpy/
+pandas/
+mathplotlib.pyplot
 
