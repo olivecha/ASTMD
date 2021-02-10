@@ -1,0 +1,14 @@
+ASTM D3039 Standard Report
+
+1. Testing parameters
+Material name : Tensile Test
+Width of samples : 12.5mm
+Thickness of samples : 1mm
+Lengths of samples : 250mm
+Extensometer length : 50.8mm
+
+2. Test Results
+Tangent modulus : 18803.0 MPa
+Standard Deviation : (0)
+Tensile strength : 206.0 MPa
+Standard Deviation : (0)
