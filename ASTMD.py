@@ -433,7 +433,7 @@ class D5868(object):
         result_file.write("Average Flexural strength : " + str(round(self.avg_strength, 2)) + " MPa" + "\n")
         result_file.write("Standard Deviation : " + "(" + str(round(self.sd_strength, 2)) + ")" + "\n")
 
-    # plot the stress strain curves with average
+    # plot the average stress time curves
     def plot_stress(self):
         # Plot the stress strain curve
         plt.figure("Stress_Time")
