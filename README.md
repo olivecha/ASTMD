@@ -54,6 +54,6 @@ Material = ASTMD.D5868(filenames, areas, mtr_name="")
 1. Computes the shear stress at the bonded joint
 2. Finds the average shear strength
 3. Plots the stress-time curve (just to show the data)
-4. Returns a result_D5868.tct file in the same directory as the test data
+4. Returns a result_D5868.txt file in the same directory as the test data
 
 
