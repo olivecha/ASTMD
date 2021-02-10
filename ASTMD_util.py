@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 def avg(parameter):
@@ -17,6 +18,14 @@ def avg(parameter):
     return average
 
 
+def get_test_data(self):
+    for filename in self.filenames:
+        _ = pd.read_csv(filename, delim_whitespace=True, skiprows=5, engine='python')  # read data from file
+        _ = _.drop(0)  # remove the units
+        _.apply(pd.to_numeric)  # make numeric
+        self.tests.append(_)
+
+
 def find_index(vector, value):
-    errors = [abs(number-value) for number in vector]
+    errors = [abs(number - value) for number in vector]
     return errors.index(min(errors))
