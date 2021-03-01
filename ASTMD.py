@@ -1,6 +1,5 @@
 import ASTMD_util
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
 
@@ -28,14 +27,7 @@ class D790(object):
             self.plot_all_modulus()
 
     # get the test data
-    def get_test_data(self):
-        for filename in self.filenames:
-            _ = pd.read_csv(filename, delim_whitespace=True, skiprows=5, engine='python')  # read data from file
-            _ = _.drop(0)  # remove the units
-            _.apply(pd.to_numeric)  # make numeric
-            self.tests.append(_)
-
-            # get the stress and strains for load and displacement
+    get_test_data = ASTMD_util.get_test_data
 
     # Compute stress and strain from deflexion and load
     def get_stress_strain(self):
@@ -57,7 +49,8 @@ class D790(object):
             else:
                 for force in test["Load"].astype(float):
                     # Eq. 3 in ASTM D790 section 12.2
-                    stress.append((3 * float(force) * self.span) / (2 * self.widths[index] * self.depths[index] ** 2))
+                    print(type(force))
+                    stress.append((3 * force * self.span) / (2 * self.widths[index] * self.depths[index] ** 2))
                 self.stresses.append(stress)
 
             # Calculate flexural strain at max strain
@@ -134,9 +127,11 @@ class D790(object):
         result_file.write("Material name : " + self.name + "\n")
         result_file.write("Width of samples : " + "mm, ".join(map(str, self.widths)) + "mm" + "\n")
         result_file.write("Depths of samples : " + "mm, ".join(map(str, self.depths)) + "mm" + "\n")
-        result_file.write("Span used : " + str(self.span) + "\n")
+        result_file.write("Span used : " + str(self.span))
         if self.largespan:
-            result_file.write("(Large span)" + "\n")
+            result_file.write(" (Large span)" + "\n")
+        else:
+            result_file.write("\n")
         result_file.write("\n")
         result_file.write("2. Test Results" + "\n")
         result_file.write("Tangent modulus : " + str(round(self.avg_modulus, 0)) + " MPa" + "\n")
@@ -147,7 +142,7 @@ class D790(object):
     # plot the stress strain curves with average
     def plot_stress_strain(self):
         # Plot the stress strain curve
-        plt.figure("Stress_Strain")
+        plt.figure("Flexural Stress_Strain")
         for stress, strain in zip(self.stresses, self.strains):
             plot1, = plt.plot(strain, stress, "#B2B2B2")
         plot1.set_label("Samples")
@@ -161,8 +156,8 @@ class D790(object):
 
     # plot the average modulus line on the stress strain graph
     def plot_modulus(self):
-        # Graphique pour matériel G1
-        plt.figure("Modulus")
+        # Plot the modulus with the stress strain curve
+        plt.figure("Flexural Modulus")
         plot1, = plt.plot(self.avg_strain, self.avg_stress)
         plot1.set_label("SS Curve")
         plot1, = plt.plot(self.avg_strain[:self.avg_stress.index(max(self.avg_stress))],
@@ -177,13 +172,13 @@ class D790(object):
 
     # Plot all modulus values with stress strain curves for validation
     def plot_all_modulus(self):
-        plt.figure("")
+        plt.figure("All Flex")
         for module, stress, strain in zip(self.modulus, self.stresses[1:], self.strains[1:]):
             plot1, = plt.plot(strain, stress, "#B2B2B2")
             plot2, = plt.plot(strain[:stress.index(max(stress))],
                               [value * module for value in strain][:stress.index(max(stress))], "r")
-        plot1.set_label("Essais")
-        plot2.set_label("modules")
+        plot1.set_label("Samples")
+        plot2.set_label("modulus")
 
 
 # Tensile Properties of Polymer Matrix Composite Materials
@@ -209,13 +204,8 @@ class D3039(object):
         if validate_modulus:
             self.plot_all_modulus()
 
-    # Import data from all tests as pandas dataframes
-    def get_test_data(self):
-        for filename in self.filenames:
-            _ = pd.read_csv(filename, delim_whitespace=True, skiprows=5, engine='python')  # read data from file
-            _ = _.drop(0)  # remove the units
-            _.apply(pd.to_numeric)  # make numeric
-            self.tests.append(_)
+    # Function to import the test data
+    get_test_data = ASTMD_util.get_test_data
 
     # Compute stress and strain from Extensometer and load
     def get_stress_strain(self):
@@ -319,7 +309,7 @@ class D3039(object):
         result_file.write("Extensometer length : " + str(self.extensiometer_length) + "mm" + "\n")
         result_file.write("\n")
         result_file.write("2. Test Results" + "\n")
-        result_file.write("Tangent modulus : " + str(round(self.avg_modulus, 0)) + " MPa" + "\n")
+        result_file.write("Chord tensile modulus : " + str(round(self.avg_modulus, 0)) + " MPa" + "\n")
         result_file.write("Standard Deviation : " + "(" + str(round(self.sd_modulus, 0)) + ")" + "\n")
         result_file.write("Tensile strength : " + str(round(self.avg_strength, 0)) + " MPa" + "\n")
         result_file.write("Standard Deviation : " + "(" + str(round(self.sd_strength, 0)) + ")" + "\n")
@@ -327,7 +317,7 @@ class D3039(object):
     # plot the stress strain curves with average
     def plot_stress_strain(self):
         # Plot the stress strain curve
-        plt.figure("Stress_Strain")
+        plt.figure("Tensile Stress_Strain")
         for stress, strain in zip(self.stresses, self.strains):
             plot1, = plt.plot(strain, stress, "#B2B2B2")
         plot1.set_label("Samples")
@@ -341,7 +331,7 @@ class D3039(object):
 
     # plot the average modulus line on the stress strain graph
     def plot_modulus(self):
-        plt.figure("Modulus")
+        plt.figure("Tensile Modulus")
         plot1, = plt.plot(self.avg_strain, self.avg_stress)
         plot1.set_label("SS Curve")
         plot1, = plt.plot(self.avg_strain[:self.avg_stress.index(max(self.avg_stress))],
@@ -349,7 +339,7 @@ class D3039(object):
                           :self.avg_stress.index(max(self.avg_stress))], "r")
         plot1.set_label("Modulus")
         plt.legend()
-        plt.title("Tangent modulus and Stress Strain curve")
+        plt.title("Secant modulus and Stress Strain curve")
         plt.ylabel("Stress (MPa)")
         plt.xlabel("Strain (mm/mm)")
         plt.grid(which='both')
@@ -358,7 +348,7 @@ class D3039(object):
 
     # plot all the modulus to verify results
     def plot_all_modulus(self):
-        plt.figure("")
+        plt.figure("Tensile All")
         for module, stress, strain in zip(self.modulus, self.stresses[1:], self.strains[1:]):
             plot1, = plt.plot(strain, stress, "#B2B2B2")
             plot2, = plt.plot(strain[:stress.index(max(stress))],
@@ -381,13 +371,8 @@ class D5868(object):
         self.get_rupture()  # Compute the max stress (break)
         self.print_results()  # Print result values to text file
 
-    # Import data from all tests as pandas dataframes
-    def get_test_data(self):
-        for filename in self.filenames:
-            _ = pd.read_csv(filename, delim_whitespace=True, skiprows=5, engine='python')  # read data from file
-            _ = _.drop(0)  # remove the units
-            _.apply(pd.to_numeric)  # make numeric
-            self.tests.append(_)
+    # get the test data
+    get_test_data = ASTMD_util.get_test_data
 
     # Compute stress and strain from Extensometer and load
     def get_stress(self):
@@ -429,20 +414,18 @@ class D5868(object):
         result_file.write("\n")
         result_file.write("2. Test Results" + "\n")
         strengths = [round(strength, 3) for strength in self.strengths]
-        result_file.write("Individual Flexural strengths : " + "Mpa, ".join(map(str, strengths)) + " MPa" + "\n")
-        result_file.write("Average Flexural strength : " + str(round(self.avg_strength, 2)) + " MPa" + "\n")
+        result_file.write("Individual Shear strengths : " + "Mpa, ".join(map(str, strengths)) + " MPa" + "\n")
+        result_file.write("Average Shear strength : " + str(round(self.avg_strength, 2)) + " MPa" + "\n")
         result_file.write("Standard Deviation : " + "(" + str(round(self.sd_strength, 2)) + ")" + "\n")
 
-    # plot the average stress time curves
+    # plot the stress strain curves with average
     def plot_stress(self):
         # Plot the stress strain curve
-        plt.figure("Stress_Time")
+        plt.figure("Shear Stress Time")
         for time, stress in zip(self.times, self.trimmed_stresses):
             plt.plot(time[:len(stress)], stress, "#2f3030")
         plt.title("Stress-Time curves")
         plt.ylabel("Shear stress (MPa)")
         plt.xlabel("Time (s)")
         plt.grid(which='both')
-
-
 
