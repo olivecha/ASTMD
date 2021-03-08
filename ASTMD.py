@@ -49,10 +49,8 @@ class D790(object):
             else:
                 for force in test["Load"].astype(float):
                     # Eq. 3 in ASTM D790 section 12.2
-                    print(type(force))
                     stress.append((3 * force * self.span) / (2 * self.widths[index] * self.depths[index] ** 2))
                 self.stresses.append(stress)
-
             # Calculate flexural strain at max strain
             for pos in test["Crosshead"].astype(float):
                 # Eq. 5 in ASTM D790 section 12.4
