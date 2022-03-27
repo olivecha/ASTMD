@@ -22,7 +22,7 @@ A `.docx` file is written with the name `ASTM_D790_test_report.docx`.
 
 ## ASTM D3039 : Standard Test Method for Tensile Properties of Polymer Matrix Composite Materials
 ```python
-Material = ASTMD.D3039(filenames, widths, thicknesses, lengths, mtr_name="", extensiometer_length=50.8)
+ASTMD.D3039(filenames, widths, thicknesses, lengths, mtr_name="", extensiometer_length=50.8)
 ```
 ```filenames``` : List of paths to the test data files\
 ```widths``` : List of the samples widths\
@@ -36,7 +36,7 @@ A `.docx` file is written with the name `ASTM_D3039_test_report.docx`.
 
 ## ASTM D5868 : Test Method for Lap Shear Adhesion for Fiber Reinforced Plastic (FRP) Bonding
 ```
-Material = ASTMD.D5868(filenames, areas, mtr_name="")
+ASTMD.D5868(filenames, areas, mtr_name="")
 ```
 ```filenames``` : List of paths to the test data files\
 ```areas``` : List of the samples areas (mm$^2$)\
