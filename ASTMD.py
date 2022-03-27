@@ -345,7 +345,7 @@ class D790(test_report):
                 row_cells[2].text = ''
 
         # Document save
-        filename = 'report_examples/ASTM_D790_test_report.docx'
+        filename = 'ASTM_D790_test_report.docx'
         i = 1
         while filename in os.listdir():
             filename = f'ASTM_D790_test_report_{i}.docx'
@@ -575,7 +575,7 @@ class D3039(test_report):
                 row_cells[4].text = ''
 
         # Document save
-        filename = 'report_examples/ASTM_D3039_test_report.docx'
+        filename = 'ASTM_D3039_test_report.docx'
         i = 1
         while filename in os.listdir():
             filename = f'ASTM_D3039_test_report_{i}.docx'
@@ -716,7 +716,7 @@ class D5868(test_report):
         document.add_paragraph(' ')
 
         # Document save
-        filename = 'report_examples/ASTM_D5868_test_report.docx'
+        filename = 'ASTM_D5868_test_report.docx'
         i = 1
         while filename in os.listdir():
             filename = f'ASTM_D5868_test_report_{i}.docx'
